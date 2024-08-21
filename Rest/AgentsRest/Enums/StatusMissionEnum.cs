@@ -3,7 +3,7 @@
     public enum StatusMissionEnum
     {
         Proposal,
-        UnderControl,
+        Assigned,//UnderControl,
         Finished
     }
 }
