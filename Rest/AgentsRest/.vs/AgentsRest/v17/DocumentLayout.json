@@ -1,0 +1,189 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|c:\\users\\user\\source\\repos\\8200\\agentsexam\\rest\\agentsrest\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|c:\\users\\user\\source\\repos\\8200\\agentsexam\\rest\\agentsrest\\models\\agent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|solutionrelative:models\\agent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|c:\\users\\user\\source\\repos\\8200\\agentsexam\\rest\\agentsrest\\models\\target.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|solutionrelative:models\\target.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|c:\\users\\user\\source\\repos\\8200\\agentsexam\\rest\\agentsrest\\models\\mission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|solutionrelative:models\\mission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|c:\\users\\user\\source\\repos\\8200\\agentsexam\\rest\\agentsrest\\models\\point.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|solutionrelative:models\\point.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|c:\\users\\user\\source\\repos\\8200\\agentsexam\\rest\\agentsrest\\enums\\statusmissionenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|solutionrelative:enums\\statusmissionenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|c:\\users\\user\\source\\repos\\8200\\agentsexam\\rest\\agentsrest\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|c:\\users\\user\\source\\repos\\8200\\agentsexam\\rest\\agentsrest\\enums\\statustargetenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|solutionrelative:enums\\statustargetenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|c:\\users\\user\\source\\repos\\8200\\agentsexam\\rest\\agentsrest\\enums\\statusagentenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92180C4D-4817-4A6B-9457-3B49279ABE01}|AgentsRest.csproj|solutionrelative:enums\\statusagentenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 326,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Agent.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Models\\Agent.cs",
+              "RelativeDocumentMoniker": "Models\\Agent.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Models\\Agent.cs",
+              "RelativeToolTip": "Models\\Agent.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAwA8AAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T08:41:07.76Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StatusAgentEnum.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Enums\\StatusAgentEnum.cs",
+              "RelativeDocumentMoniker": "Enums\\StatusAgentEnum.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Enums\\StatusAgentEnum.cs",
+              "RelativeToolTip": "Enums\\StatusAgentEnum.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T08:49:04.409Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Target.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Models\\Target.cs",
+              "RelativeDocumentMoniker": "Models\\Target.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Models\\Target.cs",
+              "RelativeToolTip": "Models\\Target.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAxwA8AAAA5AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T08:52:52.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "StatusTargetEnum.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Enums\\StatusTargetEnum.cs",
+              "RelativeDocumentMoniker": "Enums\\StatusTargetEnum.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Enums\\StatusTargetEnum.cs",
+              "RelativeToolTip": "Enums\\StatusTargetEnum.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T08:55:09.374Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Mission.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Models\\Mission.cs",
+              "RelativeDocumentMoniker": "Models\\Mission.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Models\\Mission.cs",
+              "RelativeToolTip": "Models\\Mission.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAUAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T08:58:32.988Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "StatusMissionEnum.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Enums\\StatusMissionEnum.cs",
+              "RelativeDocumentMoniker": "Enums\\StatusMissionEnum.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Enums\\StatusMissionEnum.cs",
+              "RelativeToolTip": "Enums\\StatusMissionEnum.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T09:06:46.051Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Point.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Models\\Point.cs",
+              "RelativeDocumentMoniker": "Models\\Point.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Models\\Point.cs",
+              "RelativeToolTip": "Models\\Point.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T10:40:41.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AQIAABgAAADArdeHURAUwCgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-21T11:12:13.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\8200\\AgentsExam\\Rest\\AgentsRest\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-21T11:13:35.556Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 74,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
