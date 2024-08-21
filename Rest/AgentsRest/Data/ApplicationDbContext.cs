@@ -9,7 +9,6 @@ namespace AgentsRest.Data
         IConfiguration configuration) 
         : DbContext(options)
     {
-        public DbSet<Point> Points { get; set; }
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Target> Targets { get; set; }
         public DbSet<Mission> Missions { get; set; }
@@ -19,23 +18,16 @@ namespace AgentsRest.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Agent>()
-                .HasOne(a => a.Position);
+            modelBuilder.Entity<Mission>()
+                .HasOne(m => m.Agent)
+                .WithMany()
+                .HasForeignKey(m => m.AgentId);
 
-            modelBuilder.Entity<Target>()
-                .HasOne(t => t.Position);
-
-            modelBuilder.Entity<Agent>()
-                .HasMany(agent => agent.Missions)
-                .WithOne(mission => mission.Agent)
-                .HasForeignKey(mission => mission.AgentId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Target>()
-                .HasMany(agent => agent.Missions)
-                .WithOne(mission => mission.Target)
-                .HasForeignKey(mission => mission.TargetId)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Mission>()
+                .HasOne(m => m.Target)
+                .WithMany()
+                .HasForeignKey(m => m.TargetId);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -11,8 +11,8 @@ namespace AgentsRest.Models
         public required string Image { get; set; }
         [Required, StringLength(32, MinimumLength = 2)]
         public required string Nickname { get; set; }
-        public Point Position { get; set; } = new Point();
+        public int XPosition { get; set; } = -1;
+        public int YPosition { get; set; } = -1;
         public StatusAgentEnum Status {  get; set; }
-        public List<Mission> Missions { get; set; } = [];
     }
 }
