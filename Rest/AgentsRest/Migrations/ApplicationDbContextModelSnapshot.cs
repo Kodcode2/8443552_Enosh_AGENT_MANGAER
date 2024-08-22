@@ -93,12 +93,15 @@ namespace AgentsRest.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<string>("Role")
+                    b.Property<string>("Position")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
@@ -120,7 +123,7 @@ namespace AgentsRest.Migrations
             modelBuilder.Entity("AgentsRest.Models.Mission", b =>
                 {
                     b.HasOne("AgentsRest.Models.Agent", "Agent")
-                        .WithMany()
+                        .WithMany("missions")
                         .HasForeignKey("AgentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -134,6 +137,11 @@ namespace AgentsRest.Migrations
                     b.Navigation("Agent");
 
                     b.Navigation("Target");
+                });
+
+            modelBuilder.Entity("AgentsRest.Models.Agent", b =>
+                {
+                    b.Navigation("missions");
                 });
 #pragma warning restore 612, 618
         }

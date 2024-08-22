@@ -9,6 +9,7 @@
         NorthWest,
         West,
         WestSouth,
-        South
+        South,
+        StayHere
     }
 }
