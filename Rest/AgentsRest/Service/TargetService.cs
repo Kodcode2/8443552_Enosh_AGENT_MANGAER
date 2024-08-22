@@ -7,15 +7,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AgentsRest.Service
 {
-    public class TargetService(ApplicationDbContext context) : ITargetService
+    public class TargetService(
+        ApplicationDbContext context,
+        IServiceProvider serviceProvider
+    ) : ITargetService
     {
-
+        private IMissionService _missionService = serviceProvider.GetRequiredService<IMissionService>();
         public async Task<IdDto> CreateTargetAsync(TargetDto target)
         {
             Target model = new()
             {
-                Name = target.name,
-                Position = target.position,
+                Name = target.Name,
+                Image=target.PhotoUrl,
+                Role = target.Position,
                 Status = StatusTargetEnum.Lives
             };
             context.Targets.Add(model);
@@ -45,19 +49,21 @@ namespace AgentsRest.Service
             {
                 throw new Exception("target is eliminated");
             }
-            var moveTo = Move.DirectionsDictionary[direction.Direction];
+            var moveTo = MoveUtils.Directions[direction.Direction];
             target.XPosition += moveTo.x;
             target.YPosition += moveTo.y;
-            if (!Move.IsPositionLegal(target.XPosition, target.YPosition))
+            if (!MoveUtils.IsPositionLegal(target.XPosition, target.YPosition))
             {
                 throw new Exception("the move is not legal");
             }
             await context.SaveChangesAsync();
+            await _missionService.DeleteIrrelevantMissions();
+            await _missionService.CreateMission(target);
         }
 
         public async Task PinPositionAsync(int id, PositionDto position)
         {
-            if (!Move.IsPositionLegal(position.X, position.Y))
+            if (!MoveUtils.IsPositionLegal(position.X, position.Y))
             {
                 throw new Exception("the Position is not legal");
             }
@@ -65,10 +71,6 @@ namespace AgentsRest.Service
             if (target == null)
             {
                 throw new Exception("target is not found");
-            }
-            if (target.Status == StatusTargetEnum.Eliminated)
-            {
-                throw new Exception("target is eliminated");
             }
             target.XPosition = position.X;
             target.YPosition = position.Y;

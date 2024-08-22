@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgentsRest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240822071951_initialCreate")]
+    [Migration("20240822121038_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -97,6 +97,7 @@ namespace AgentsRest.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Image")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -104,7 +105,7 @@ namespace AgentsRest.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<string>("Position")
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");

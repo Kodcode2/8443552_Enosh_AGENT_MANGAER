@@ -8,14 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AgentsRest.Service
 {
-    public class AgentsService(ApplicationDbContext context) : IAgentsService
+    public class AgentsService(
+        ApplicationDbContext context, 
+        IServiceProvider serviceProvider
+    ) : IAgentsService
     {
+        private IMissionService _missionService = serviceProvider.GetRequiredService<IMissionService>();
         public async Task<IdDto> CreateAgentAsync(AgentDto agent)
         {
             Agent model = new()
             {
-                Image = agent.photo_url,
-                Nickname = agent.nickname,
+                Image = agent.PhotoUrl,
+                Nickname = agent.Nickname,
                 Status = StatusAgentEnum.Dormant
             };
             context.Agents.Add(model);
@@ -36,7 +40,7 @@ namespace AgentsRest.Service
 
         public async Task PinPositionAsync(int id, PositionDto position)
         {
-            if (!Move.IsPositionLegal(position.X, position.Y))
+            if (!MoveUtils.IsPositionLegal(position.X, position.Y))
             {
                 throw new Exception("the Position is not legal");
             }
@@ -61,14 +65,16 @@ namespace AgentsRest.Service
             {
                 throw new Exception("agent is active");
             }
-            var moveTo = Move.DirectionsDictionary[direction.Direction];
+            var moveTo = MoveUtils.Directions[direction.Direction];
             agent.XPosition += moveTo.x;
             agent.YPosition += moveTo.y;
-            if (!Move.IsPositionLegal(agent.XPosition, agent.YPosition))
+            if (!MoveUtils.IsPositionLegal(agent.XPosition, agent.YPosition))
             {
                 throw new Exception("the move is not legal");
             }
             await context.SaveChangesAsync();
+            await _missionService.DeleteIrrelevantMissions();
+            await _missionService.CreateMission(agent);
         }
     }
 }

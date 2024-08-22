@@ -2,8 +2,8 @@
 {
     public class TargetDto
     {
-        public required string name {  get; set; }
-        public required string position { get; set; }
-        public required string photo_url { get; set; }
+        public required string Name {  get; set; }
+        public required string Position { get; set; }
+        public required string PhotoUrl { get; set; }
     }
 }

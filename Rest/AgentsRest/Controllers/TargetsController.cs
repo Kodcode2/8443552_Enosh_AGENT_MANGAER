@@ -1,15 +1,16 @@
 ﻿using AgentsRest.Dto;
+using AgentsRest.Models;
 using AgentsRest.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgentsRest.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class TargetController(ITargetService targetService) : ControllerBase
+    public class TargetsController(ITargetService targetService) : ControllerBase
     {
-        [HttpPost("POST/targets")]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -21,7 +22,6 @@ namespace AgentsRest.Controllers
                 if (targetId == null)
                 {
                     return StatusCode(StatusCodes.Status412PreconditionFailed);
-                    //PreconditionFailed
                 }
                 return Created("", targetId);
             }
@@ -30,7 +30,7 @@ namespace AgentsRest.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("GET/targets")]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetAllAgents()
@@ -42,7 +42,7 @@ namespace AgentsRest.Controllers
             }
             catch (Exception ex) { return NotFound(ex.Message); }
         }
-        [HttpPut("PUT/targets/{id}/pin")]
+        [HttpPut("{id}/pin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> PinPosition(int id, [FromBody] PositionDto position)
@@ -54,7 +54,7 @@ namespace AgentsRest.Controllers
             }
             catch (Exception ex) { return NotFound(); }
         }
-        [HttpPut("PUT/targets/{id}/move")]
+        [HttpPut("{id}/move")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Move(int id, [FromBody] DirectionDto direction)

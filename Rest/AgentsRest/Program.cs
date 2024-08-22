@@ -20,6 +20,11 @@ namespace AgentsRest
 
             builder.Services.AddScoped<IAgentsService,AgentsService>();
             builder.Services.AddScoped<ITargetService, TargetService>();
+            builder.Services.AddScoped<IMissionService, MissionService>();
+
+            builder.Services.AddTransient(typeof(Lazy<>), typeof(Lazy<>));
+     
+
 
             builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(
