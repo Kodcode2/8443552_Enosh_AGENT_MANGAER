@@ -1,11 +1,16 @@
 ﻿using AgentsClient.Dto;
+using AgentsClient.Enums;
+using AgentsClient.ViewModel;
 
 namespace AgentsClient.Service
 {
     public interface IMissionService
     {
         Task<List<MissionDto>> GetAllMissionsAsync();
-        Task<MissionDto> GetMissionAsync(int id);
-        Task<MissionDto> RunMissionAsync(int id);
+        Task<MissionDto> GetMissionByIdAsync(int id);
+        Task<bool> RunMissionAsync(int id);
+        Task<int> GetCountMissionsAsync();
+        Task<int> GetCountAssignedMissionsAsync();
+        Task<GeneralInformationVM> GetDetailsView();
     }
 }

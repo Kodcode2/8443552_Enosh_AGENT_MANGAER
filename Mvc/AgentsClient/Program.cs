@@ -11,6 +11,8 @@ namespace AgentsClient
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IMissionService, MissionService>();
+            builder.Services.AddScoped<IAgentService, AgentService>();
+            builder.Services.AddScoped<ITargetService, TargetService>();
             builder.Services.AddHttpClient();
             var app = builder.Build();
 

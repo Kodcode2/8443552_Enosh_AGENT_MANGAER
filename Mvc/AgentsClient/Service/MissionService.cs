@@ -1,11 +1,17 @@
 ﻿using AgentsClient.Dto;
+using AgentsClient.Enums;
+using AgentsClient.ViewModel;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
 namespace AgentsClient.Service
 {
-    public class MissionService(IHttpClientFactory clientFactory) : IMissionService
+    public class MissionService(
+        IHttpClientFactory clientFactory,
+        IAgentService agentService,
+        ITargetService targetService
+    ) : IMissionService
     {
         private readonly string baseUrl = "https://localhost:7083/Missions";
         public async Task<List<MissionDto>> GetAllMissionsAsync()
@@ -25,15 +31,14 @@ namespace AgentsClient.Service
             return [];
         }
 
-        public async Task<MissionDto> GetMissionAsync(int id)
+        public async Task<MissionDto> GetMissionByIdAsync(int id)
         {
             var allMisions = await GetAllMissionsAsync();
             return allMisions.FirstOrDefault(m => m.Id == id)
                 ?? throw new Exception("The mission does not exist");
         }
-        public async Task<MissionDto> RunMissionAsync(int id)
+        public async Task<bool> RunMissionAsync(int id)
         {
-            var mission = GetMissionAsync(id);
             var client = clientFactory.CreateClient();
 
             var request = new HttpRequestMessage(HttpMethod.Put, $"{baseUrl}/{id}");
@@ -44,9 +49,42 @@ namespace AgentsClient.Service
             var respons = await client.SendAsync(request);
             if (!respons.IsSuccessStatusCode)
             {
-                throw new Exception("The operation was not successful");
+               return false;
             }
-            return await mission;
+            return  true;
+        }
+
+        public async Task<int> GetCountMissionsAsync()
+        {
+            var allMissions = await GetAllMissionsAsync();
+            return allMissions.Count();
+        }
+        public async Task<int> GetCountAssignedMissionsAsync()
+        {
+            var allMissions = await GetAllMissionsAsync();
+            return allMissions.Where(m => m.status == StatusMissionEnum.Assigned).Count();
+        }
+
+        public async Task<GeneralInformationVM> GetDetailsView()
+        {
+            int totalAgents = await agentService.GetCountAgents(),
+                allActiveAgents = await agentService.GetCountActiveAgents(),
+                totalTargets = await targetService.GetCountTargets(),
+                allEliminatedTargets = await targetService.GetCountEliminatedTargets();
+
+            var g= new GeneralInformationVM()
+            {
+                TotalAgents = totalAgents,
+                AllActiveAgents = allActiveAgents,
+                TotalTargets = totalTargets,
+                AllEliminatedTargets = allEliminatedTargets,
+                TotalMissions = await GetCountMissionsAsync(),
+                AllAssignedMissions = await GetCountAssignedMissionsAsync(),
+                RelationOfAgentsToTargets = (totalTargets) / totalAgents,
+                RatioOfAgentsThatCanBeTeamedToTargetsAgainstTargets =
+                (totalTargets - allEliminatedTargets) / (totalAgents - allActiveAgents)
+            };
+            return g;
         }
     }
 }

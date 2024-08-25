@@ -16,7 +16,6 @@ namespace AgentsRest.Controllers
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
         public async Task<ActionResult> CreateAgent([FromBody] AgentDto agent)
@@ -24,12 +23,7 @@ namespace AgentsRest.Controllers
             try
             {
                 var agentId = await agentsService.CreateAgentAsync(agent);
-                if (agentId == null)
-                {
-                    return StatusCode(StatusCodes.Status412PreconditionFailed);
-                    //PreconditionFailed
-                }
-                return Created("", agentId);
+                return CreatedAtAction(nameof(CreateAgent), agentId);
             }
             catch (Exception ex)
             {

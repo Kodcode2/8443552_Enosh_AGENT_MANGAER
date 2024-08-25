@@ -1,4 +1,5 @@
-﻿using AgentsClient.Service;
+﻿using AgentsClient.Enums;
+using AgentsClient.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgentsClient.Controllers
@@ -8,27 +9,24 @@ namespace AgentsClient.Controllers
         public async Task<IActionResult> Index()
         {
             var missions = await missionService.GetAllMissionsAsync();
-            return View(missions);
+            return View(missions.Where(m => m.status == StatusMissionEnum.Proposal));
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var mission = await missionService.GetMissionAsync(id);
+            var mission = await missionService.GetMissionByIdAsync(id);
             return View(mission);
         }
 
         public async Task<IActionResult> Run(int id)
         {
-            try
-            {
-                var mission = await missionService.RunMissionAsync(id);
 
-                return View("Details", mission);
-            }
-            catch (Exception ex)
+            var isRun = await missionService.RunMissionAsync(id);
+            if (isRun)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id });
             }
+            return RedirectToAction("Index");
         }
     }
 }

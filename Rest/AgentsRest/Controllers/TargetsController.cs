@@ -18,9 +18,7 @@ namespace AgentsRest.Controllers
             try
             {
                 var targetId = await targetService.CreateTargetAsync(target);
-                if (targetId == null)
-                
-                return CreatedAtAction(nameof(c)), targetId);
+                return CreatedAtAction(nameof(CreateTarget), targetId);
             }
             catch (Exception ex)
             {
