@@ -6,6 +6,6 @@ namespace AgentsClient.Service
     {
         Task<List<MissionDto>> GetAllMissionsAsync();
         Task<MissionDto> GetMissionAsync(int id);
-        Task<bool> RunMissionAsync(int id);
+        Task<MissionDto> RunMissionAsync(int id);
     }
 }

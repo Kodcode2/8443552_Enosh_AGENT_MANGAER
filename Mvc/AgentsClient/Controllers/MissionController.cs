@@ -19,12 +19,16 @@ namespace AgentsClient.Controllers
 
         public async Task<IActionResult> Run(int id)
         {
-            bool isRun=await missionService.RunMissionAsync(id);
-            if(isRun)
+            try
             {
-                return RedirectToAction("Details", new { id });
+                var mission = await missionService.RunMissionAsync(id);
+
+                return View("Details", mission);
             }
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
         }
     }
 }

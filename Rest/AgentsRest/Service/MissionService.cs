@@ -25,20 +25,22 @@ namespace AgentsRest.Service
         public async Task<List<MissionDto>> GetAllMissionsDtoAsync()
         {
             var allMissions = await GetAllMissionsWithAgentAndTargetAsync();
-            return allMissions.Select(m => new MissionDto()
-            {
-                Id = m.Id,
-                AgentNickname = m.Agent.Nickname,
-                AgentXPosition = m.Agent.XPosition,
-                AgentYPosition = m.Agent.YPosition,
-                TargettName = m.Target.Name,
-                TargetRole = m.Target.Role,
-                TargetXPosition = m.Target.XPosition,
-                TargetYPosition = m.Target.YPosition,
-                Distance = MoveUtils.Distance(m.Agent, m.Target),
-                Duration = TimeSpan.FromHours(MoveUtils.Distance(m.Agent, m.Target) / 5),
-                Status = m.Status
-            }).ToList();
+            return allMissions
+                .Where(m => m.Status == StatusMissionEnum.Proposal)
+                .Select(m => new MissionDto()
+                {
+                    Id = m.Id,
+                    AgentNickname = m.Agent.Nickname,
+                    AgentXPosition = m.Agent.XPosition,
+                    AgentYPosition = m.Agent.YPosition,
+                    TargettName = m.Target.Name,
+                    TargetRole = m.Target.Role,
+                    TargetXPosition = m.Target.XPosition,
+                    TargetYPosition = m.Target.YPosition,
+                    Distance = MoveUtils.Distance(m.Agent, m.Target),
+                    Duration = TimeSpan.FromHours(MoveUtils.Distance(m.Agent, m.Target) / 5)
+                })
+                .ToList();
         }
         private async Task<Mission> GetMissionWithAgentAndTargetByIdAsync(int id)
         {

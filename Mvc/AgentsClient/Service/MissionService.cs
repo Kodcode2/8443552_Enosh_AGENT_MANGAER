@@ -31,8 +31,9 @@ namespace AgentsClient.Service
             return allMisions.FirstOrDefault(m => m.Id == id)
                 ?? throw new Exception("The mission does not exist");
         }
-        public async Task<bool> RunMissionAsync(int id)
+        public async Task<MissionDto> RunMissionAsync(int id)
         {
+            var mission = GetMissionAsync(id);
             var client = clientFactory.CreateClient();
 
             var request = new HttpRequestMessage(HttpMethod.Put, $"{baseUrl}/{id}");
@@ -41,11 +42,11 @@ namespace AgentsClient.Service
 
 
             var respons = await client.SendAsync(request);
-            if (respons.IsSuccessStatusCode)
+            if (!respons.IsSuccessStatusCode)
             {
-                return true;
+                throw new Exception("The operation was not successful");
             }
-            return false;
+            return await mission;
         }
     }
 }
