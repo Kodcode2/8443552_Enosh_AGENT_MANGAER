@@ -20,7 +20,7 @@ namespace AgentsRest.Data
         {
             modelBuilder.Entity<Mission>()
                 .HasOne(m => m.Agent)
-                .WithMany(a => a.missions)
+                .WithMany(a => a.Missions)
                 .HasForeignKey(m => m.AgentId);
 
             modelBuilder.Entity<Mission>()

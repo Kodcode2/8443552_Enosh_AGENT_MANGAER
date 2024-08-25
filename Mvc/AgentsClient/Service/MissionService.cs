@@ -80,9 +80,9 @@ namespace AgentsClient.Service
                 AllEliminatedTargets = allEliminatedTargets,
                 TotalMissions = await GetCountMissionsAsync(),
                 AllAssignedMissions = await GetCountAssignedMissionsAsync(),
-                RelationOfAgentsToTargets = (totalTargets) / totalAgents,
+                RelationOfAgentsToTargets = (totalTargets) /Math.Max(totalAgents,1),
                 RatioOfAgentsThatCanBeTeamedToTargetsAgainstTargets =
-                (totalTargets - allEliminatedTargets) / (totalAgents - allActiveAgents)
+                (totalTargets - allEliminatedTargets) / Math.Max(totalAgents - allActiveAgents,1),
             };
             return g;
         }

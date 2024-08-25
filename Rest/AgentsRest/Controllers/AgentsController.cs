@@ -42,6 +42,18 @@ namespace AgentsRest.Controllers
             }
             catch (Exception ex) { return NotFound(ex.Message); }
         }
+        [HttpGet("all")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Agent>> GetAllAgentsWithMissions()
+        {
+            try
+            {
+                var allAgents = await agentsService.GetAllAgentsWithMissionsAsync();
+                return Ok(allAgents);
+            }
+            catch (Exception ex) { return NotFound(ex.Message); }
+        }
         [HttpPut("{id}/pin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

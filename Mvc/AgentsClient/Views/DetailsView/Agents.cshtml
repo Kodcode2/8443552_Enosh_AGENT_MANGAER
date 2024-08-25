@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AgentsClient.Models.Agent>
+﻿@model IEnumerable<AgentsClient.ViewModel.AgentVM>
 
 @{
     ViewData["Title"] = "Agents";
@@ -12,7 +12,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th hidden>
+            <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
@@ -30,13 +30,19 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountamountEliminations)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td hidden>
+            <td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
@@ -55,7 +61,13 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.ActionLink("Mission", "Mission", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountamountEliminations)
+            </td>
+            <td>
+                    @Html.ActionLink("Mission", "Mission", new { agentId = item.Id })
             </td>
         </tr>
 }

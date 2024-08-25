@@ -5,6 +5,9 @@ using AgentsRest.Models;
 using AgentsRest.Utils;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using System;
 
 namespace AgentsRest.Service
 {
@@ -35,6 +38,20 @@ namespace AgentsRest.Service
         public async Task<List<Agent>> GetAllAgentsAsync()
         {
             var allAgents = await context.Agents.ToListAsync();
+            return allAgents;
+        }
+        public async Task<List<Agent>> GetAllAgentsWithMissionsAsync()
+        {
+            var allAgents = await context.Agents.AsNoTracking()
+            .ToListAsync();
+            
+            foreach (var agent in allAgents)
+            {
+                var missions = await context.Missions
+                    .Where(m => m.AgentId == agent.Id)
+                    .ToListAsync();
+                agent.Missions = missions;
+            }
             return allAgents;
         }
 

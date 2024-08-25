@@ -14,6 +14,6 @@ namespace AgentsRest.Models
         public int XPosition { get; set; } = -1;
         public int YPosition { get; set; } = -1;
         public StatusAgentEnum Status {  get; set; }
-        public List<Mission> missions { get; set; } = [];
+        public List<Mission> Missions { get; set; } = [];
     }
 }
