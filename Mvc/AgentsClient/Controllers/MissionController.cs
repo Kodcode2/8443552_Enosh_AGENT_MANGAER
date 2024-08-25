@@ -1,0 +1,30 @@
+﻿using AgentsClient.Service;
+using Microsoft.AspNetCore.Mvc;
+
+namespace AgentsClient.Controllers
+{
+    public class MissionController(IMissionService missionService) : Controller
+    {
+        public async Task<IActionResult> Index()
+        {
+            var missions = await missionService.GetAllMissionsAsync();
+            return View(missions);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var mission = await missionService.GetMissionAsync(id);
+            return View(mission);
+        }
+
+        public async Task<IActionResult> Run(int id)
+        {
+            bool isRun=await missionService.RunMissionAsync(id);
+            if(isRun)
+            {
+                return RedirectToAction("Details", new { id });
+            }
+            return RedirectToAction("Index");
+        }
+    }
+}
