@@ -5,7 +5,9 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore;
 using AgentsRest.Utils;
-
+//לטיפול ביום א. בידיקה את הניקוי שלשימות שלא רלוונטיות. ..==========================
+//לבדוק מחיקה שמקרה והמשימה פעילה
+//להוסיף הפעלת משימה
 namespace AgentsRest.Service
 {
     public class MissionService(
@@ -13,32 +15,56 @@ namespace AgentsRest.Service
         IServiceProvider serviceProvider*/
     ) : IMissionService
     {
-        /*private ITargetService targetService = serviceProvider.GetRequiredService<ITargetService>();
-        private IAgentsService agentsService = serviceProvider.GetRequiredService<IAgentsService>();*/
+        public async Task<List<Mission>> GetAllMissionsWithAgentAndTargetAsync() =>
+            await context.Missions
+            .Include(m => m.Agent)
+            .Include(m => m.Target)
+            .ToListAsync();
+
+        private async Task<Mission> GetMissionWithAgentAndTargetByIdAsync(int id)
+        {
+            var mission = await context.Missions
+                .Include(m => m.Agent)
+                .Include(m => m.Target)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (mission == null)
+            {
+                throw new Exception("The mission does not exist");
+            }
+            return mission;
+        }
+
         public async Task CreateMission(Agent agent)
         {
             if (agent.Status == StatusAgentEnum.Active)
             {
                 throw new Exception("agent is active");
             }
-            if(!MoveUtils.IsPositionLegal(agent.XPosition, agent.YPosition))
+            if (!MoveUtils.IsPositionLegal(agent.XPosition, agent.YPosition))
             {
                 throw new Exception("agent is not in service");
             }
-            var missionsAssigned = await context.Missions
-                .Include(m => m.Target)
-                .Include(m => m.Agent)
-                .Where(m => m.Status == StatusMissionEnum.Assigned)
-                .ToListAsync();
+            var missions = await GetAllMissionsWithAgentAndTargetAsync();
+            missions.Where(m => m.Status != StatusMissionEnum.Finished)
+                .ToList();
             var targets = await /*targetService.GetAllTargetsAsync(); */ context.Targets.ToListAsync();
-
-            await context.Missions.AddRangeAsync(targets
+            targets = targets
+                //הבאת רק טרוריסטים חיים
                 .Where(target => target.Status == StatusTargetEnum.Lives)
-                .Where(target => !missionsAssigned
-                                    .Any(m => m.Target == target && m.Status == StatusMissionEnum.Assigned))
-                .Where(target => !missionsAssigned.Any(m=>m.Target==target&&m.Agent == agent))
+                //הבאת רק טרוריסטים שמיקומם אותחל
                 .Where(target => MoveUtils.IsPositionLegal(target.XPosition, target.YPosition))
+                //הבאת רק טרוריסטים שמיקומם הוא בתוך 200 ק"מ
                 .Where(target => MoveUtils.Distance(agent, target) <= 200)
+                //הבאת רק טרוריסטים שלא נמצאים במשימה שהופעלה כבר
+                .Where(target => !missions.Any(m => m.TargetId == target.Id && m.Status == StatusMissionEnum.Assigned))
+                //הבאת רק טרוריסטים שלא נמצאים במשימה קיימת עם סוכן זה
+                .Where(target => !missions.Any(m => m.TargetId == target.Id && m.AgentId == agent.Id))
+                .ToList();
+            await context.Missions.AddRangeAsync(targets
+                //הבאת רק טרוריסטים שלא נמצאים במשימה שהופעלה כבר
+                .Where(target => !missions.Any(m => m.TargetId == target.Id && m.Status == StatusMissionEnum.Assigned))
+                //הבאת רק טרוריסטים שלא נמצאים במשימה קיימת עם סוכן זה
+                .Where(target => !missions.Any(m => m.TargetId == target.Id && m.AgentId == agent.Id))
                 .Select(target => new Mission()
                 {
                     TimeLeft = MoveUtils.Distance(agent, target) / 5,
@@ -62,23 +88,31 @@ namespace AgentsRest.Service
             {
                 throw new Exception("target is not in service");
             }
-            var missionsAssigned = await context.Missions
-                .Include(m=>m.Target)
-                .Include(m=>m.Agent)
-                .Where(m => m.Status == StatusMissionEnum.Assigned)
-                .ToListAsync();
+            var missions = await GetAllMissionsWithAgentAndTargetAsync();
+            missions.Where(m => m.Status != StatusMissionEnum.Finished)
+                .ToList();
 
-            if (missionsAssigned.Any(m => m.Target == target))
+            if (missions.Any(m => m.Target == target))
             {
                 throw new Exception("The target is already being tracked");
             }
             var agents = await /*agentsService.GetAllAgentsAsync(); */ context.Agents.ToListAsync();
+            agents = agents
+                //הבאת כל הסוכנים שהופעלו
+                .Where(agent => MoveUtils.IsPositionLegal(agent.XPosition, agent.YPosition))
+                //הבאת כל הסוכנים שאינם פעילים
+                .Where(agent => agent.Status == StatusAgentEnum.Dormant)
+                //הבאת כל הסוכנים שנמצאים בתוך 200 ק"מ
+                .Where(agent => MoveUtils.Distance(agent, target) <= 200)
+                //הבאת כל הסוכנים שאין עליהם משימה עם הטרוריסט הספציפי
+                .Where(agent => !missions.Any(m => m.TargetId == target.Id && m.AgentId == agent.Id))
+                .ToList();
 
             await context.Missions.AddRangeAsync(agents
+                //הבאת כל הסוכנים שאין עליהם משימה עם הטרוריסט הספציפי
+                .Where(agent => !missions.Any(m => m.TargetId == target.Id && m.AgentId == agent.Id))
+                //הבאת כל הסוכנים שאינם פעילים
                 .Where(agent => agent.Status == StatusAgentEnum.Dormant)
-                .Where(agent=>MoveUtils.IsPositionLegal(agent.XPosition,agent.YPosition))
-                .Where(agent => !missionsAssigned.Any(m => m.Target == target && m.Agent == agent))
-                .Where(agent => MoveUtils.Distance(agent, target) <= 200)
                 .Select(agent => new Mission()
                 {
                     TimeLeft = MoveUtils.Distance(agent, target) / 5,
@@ -94,16 +128,23 @@ namespace AgentsRest.Service
 
         public async Task DeleteIrrelevantMissions()
         {
-            var missionsProposal = await context.Missions
-                .Include(m=>m.Agent)
-                .Include(m=>m.Target)
-                .Where(m => m.Status == StatusMissionEnum.Proposal)
-                .ToListAsync();
+            var missionsProposal = await GetAllMissionsWithAgentAndTargetAsync();
+            missionsProposal = missionsProposal.Where(m => m.Status == StatusMissionEnum.Proposal)
+                .ToList();
 
             context.Missions.RemoveRange(missionsProposal
                 .Where(m => MoveUtils.Distance(m.Agent, m.Target) > 200)
             );
+            var toRemove = missionsProposal
+                 .FirstOrDefault(
+                    mission => missionsProposal.Any(m => m.TargetId == mission.TargetId && m.AgentId == mission.AgentId)
+                 );
+            if (toRemove != null)
+            {
+                context.Missions.Remove(toRemove);
+            }
             await context.SaveChangesAsync();
+            ;
         }
 
         private async Task CompleteMission(Mission mission)
@@ -121,31 +162,44 @@ namespace AgentsRest.Service
             await context.SaveChangesAsync();
         }
 
-        public async Task MoveAllActiveAgentsTowardsTarget()
+        public async Task MoveAllActiveAgentsTowardsTargetAsync()
         {
-            var mission = await context.Missions
-                .Include(m => m.Agent)
-                .Include(m => m.Target)
-                .Where(mission => mission.Status == StatusMissionEnum.Assigned)
-                .ToListAsync();
-            mission.Select(MoveAgentTowardsTarget);
+            var mission = await GetAllMissionsWithAgentAndTargetAsync();
+            mission = mission.Where(mission => mission.Status == StatusMissionEnum.Assigned)
+                .ToList();
+
+            mission.ForEach(async m => await MoveAgentTowardsTarget(m));
             await context.SaveChangesAsync();
         }
 
-        private async Task MoveAgentTowardsTarget(Mission mission)
+        public async Task MoveAgentTowardsTarget(Mission mission)
         {
             var direction = MoveUtils.GetDirectionToActiveAgent(mission);
-            if (direction == "")
-            {
-                await CompleteMission(mission);
-            }
-            else
+            
+            if (direction != "")
             {
                 var position = MoveUtils.Directions[direction];
                 mission.Agent.XPosition += position.x;
                 mission.Agent.YPosition += position.y;
-                mission.TimeLeft = MoveUtils.Distance(mission.Agent, mission.Target) / 5;
+                mission.TimeLeft = MoveUtils.Distance(mission.Agent, mission.Target);
             }
+            if (direction == "" || MoveUtils.GetDirectionToActiveAgent(mission) == "")
+            {
+                await CompleteMission(mission);
+            }
+        }
+        public async Task RunMission(int id)
+        {
+            var mission = await GetMissionWithAgentAndTargetByIdAsync(id);
+            mission.Agent.Status = StatusAgentEnum.Active;
+            mission.Status = StatusMissionEnum.Assigned;
+            var allMissions = await GetAllMissionsWithAgentAndTargetAsync();
+            context.Missions.RemoveRange(allMissions
+                .Where(m => m.Id != id)
+                .Where(m => m.TargetId == mission.TargetId || m.Agent.Id == mission.AgentId)
+                .ToList()
+            );
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -33,10 +33,10 @@ namespace AgentsRest.Utils
             string northSouth = string.Empty;
             switch (x)
             {
-                case < 0:
+                case > 0:
                     eastWest = "w";
                     break;
-                case > 0:
+                case < 0:
                     eastWest = "e";
                     break;
                 default:
@@ -45,10 +45,10 @@ namespace AgentsRest.Utils
             }
             switch (y)
             {
-                case < 0:
+                case > 0:
                     northSouth = "s";
                     break;
-                case > 0:
+                case < 0:
                     northSouth = "n";
                     break;
                 default:
