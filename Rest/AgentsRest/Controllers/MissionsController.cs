@@ -1,12 +1,13 @@
 ﻿using AgentsRest.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AgentsRest.Models;
 
 namespace AgentsRest.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MissionController(IMissionService missionService) : ControllerBase
+    public class MissionsController(IMissionService missionService) : ControllerBase
     {
         [HttpPut("update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -28,7 +29,8 @@ namespace AgentsRest.Controllers
         {
             try
             {
-                var AllMissions = await missionService.GetAllMissionsWithAgentAndTargetAsync();
+                var AllMissions = await missionService.GetAllMissionsDtoAsync();
+                
                 return Ok(AllMissions);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }

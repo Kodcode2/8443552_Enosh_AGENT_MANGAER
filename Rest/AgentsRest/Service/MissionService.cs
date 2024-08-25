@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore;
 using AgentsRest.Utils;
+using AgentsRest.Dto;
 //לטיפול ביום א. בידיקה את הניקוי שלשימות שלא רלוונטיות. ..==========================
 //לבדוק מחיקה שמקרה והמשימה פעילה
 //להוסיף הפעלת משימה
@@ -21,6 +22,24 @@ namespace AgentsRest.Service
             .Include(m => m.Target)
             .ToListAsync();
 
+        public async Task<List<MissionDto>> GetAllMissionsDtoAsync()
+        {
+            var allMissions = await GetAllMissionsWithAgentAndTargetAsync();
+            return allMissions.Select(m => new MissionDto()
+            {
+                Id = m.Id,
+                AgentNickname = m.Agent.Nickname,
+                AgentXPosition = m.Agent.XPosition,
+                AgentYPosition = m.Agent.YPosition,
+                TargettName = m.Target.Name,
+                TargetRole = m.Target.Role,
+                TargetXPosition = m.Target.XPosition,
+                TargetYPosition = m.Target.YPosition,
+                Distance = MoveUtils.Distance(m.Agent, m.Target),
+                Duration = TimeSpan.FromHours(MoveUtils.Distance(m.Agent, m.Target) / 5),
+                Status = m.Status
+            }).ToList();
+        }
         private async Task<Mission> GetMissionWithAgentAndTargetByIdAsync(int id)
         {
             var mission = await context.Missions
@@ -190,7 +209,12 @@ namespace AgentsRest.Service
         }
         public async Task RunMission(int id)
         {
-            var mission = await GetMissionWithAgentAndTargetByIdAsync(id);
+            var mission = await GetMissionWithAgentAndTargetByIdAsync(id)
+                ?? throw new Exception("The mission does not exist");
+            if(mission.Agent.Status == StatusAgentEnum.Active)
+            {
+                throw new Exception("The mission has already been started");
+            }
             mission.Agent.Status = StatusAgentEnum.Active;
             mission.Status = StatusMissionEnum.Assigned;
             var allMissions = await GetAllMissionsWithAgentAndTargetAsync();
