@@ -2,7 +2,7 @@
 
 namespace AgentsClient.ViewModel
 {
-    public class GeneralInformationVM
+    public class Statistics
     {
         public int TotalAgents { get; set; }
         public int AllActiveAgents { get; set; }

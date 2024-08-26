@@ -12,5 +12,6 @@ namespace AgentsClient.Service
         Task<int> GetCountActiveAgents();
         Task<List<AgentVM>> GetAllAgentsVMAsync();
         Task<AgentVM> GetAgentsVMByIdAsync(int id);
+        Task<List<(int X, int Y)>> GetAllAgentPositions();
     }
 }

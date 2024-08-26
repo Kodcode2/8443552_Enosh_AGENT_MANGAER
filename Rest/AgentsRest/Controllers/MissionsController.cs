@@ -9,7 +9,7 @@ namespace AgentsRest.Controllers
     [ApiController]
     public class MissionsController(IMissionService missionService) : ControllerBase
     {
-        [HttpPut("update")]
+        [HttpPost("update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> MoveAllAssignedAgents()

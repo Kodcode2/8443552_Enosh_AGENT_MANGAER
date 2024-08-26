@@ -42,7 +42,7 @@ namespace AgentsRest.Controllers
             }
             catch (Exception ex) { return NotFound(ex.Message); }
         }
-        [HttpGet("all")]
+        [HttpGet("incloudMissions")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Agent>> GetAllAgentsWithMissions()

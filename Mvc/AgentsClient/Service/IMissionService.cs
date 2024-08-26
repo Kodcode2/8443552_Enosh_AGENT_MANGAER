@@ -11,6 +11,6 @@ namespace AgentsClient.Service
         Task<bool> RunMissionAsync(int id);
         Task<int> GetCountMissionsAsync();
         Task<int> GetCountAssignedMissionsAsync();
-        Task<GeneralInformationVM> GetDetailsView();
+        Task<Statistics> GetStatisticsAsync();
     }
 }

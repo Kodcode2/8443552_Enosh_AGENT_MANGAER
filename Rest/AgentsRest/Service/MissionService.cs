@@ -26,7 +26,6 @@ namespace AgentsRest.Service
         {
             var allMissions = await GetAllMissionsWithAgentAndTargetAsync();
             return allMissions
-                .Where(m => m.Status == StatusMissionEnum.Proposal)
                 .Select(m => new MissionDto()
                 {
                     Id = m.Id,
@@ -38,7 +37,8 @@ namespace AgentsRest.Service
                     TargetXPosition = m.Target.XPosition,
                     TargetYPosition = m.Target.YPosition,
                     Distance = MoveUtils.Distance(m.Agent, m.Target),
-                    Duration = TimeSpan.FromHours(MoveUtils.Distance(m.Agent, m.Target) / 5)
+                    Duration = TimeSpan.FromHours(MoveUtils.Distance(m.Agent, m.Target) / 5),
+                    status = m.Status
                 })
                 .ToList();
         }

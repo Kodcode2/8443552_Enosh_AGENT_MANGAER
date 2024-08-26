@@ -26,16 +26,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\user\source\repos\8200\8443552_Enosh_AGENT_MANGAER\Mvc\AgentsClient
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/DetailsView/Agents.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0YWlsc1ZpZXdcQWdlbnRzLmNzaHRtbA==
+[C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/Dashboards/Agents.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkc1xBZ2VudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/DetailsView/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0YWlsc1ZpZXdcSW5kZXguY3NodG1s
+[C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/Dashboards/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/DetailsView/Mission.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0YWlsc1ZpZXdcTWlzc2lvbi5jc2h0bWw=
+[C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/Dashboards/Mission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkc1xNaXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/Dashboards/Targets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkc1xUYXJnZXRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/Home/Index.cshtml]
@@ -60,6 +64,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/Table/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/user/source/repos/8200/8443552_Enosh_AGENT_MANGAER/Mvc/AgentsClient/Views/Target/Index.cshtml]

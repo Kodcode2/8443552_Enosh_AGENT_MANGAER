@@ -1,0 +1,26 @@
+﻿@model AgentsClient.ViewModel.PositionsVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+<table border="1" cellpadding="2" cellspacing="0">
+    @for (int i = 0; i < 1000; i++)
+    {
+        <tr>
+            @for (int j = 0; j < 1000; j++)
+            {
+                <td>@Model.Matrix[i, j]</td>
+            }
+        </tr>
+    }
+</table>
+
+
+
+
+
+
+
+
+
+

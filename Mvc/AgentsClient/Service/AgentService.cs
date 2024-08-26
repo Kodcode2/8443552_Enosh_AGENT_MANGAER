@@ -37,7 +37,7 @@ namespace AgentsClient.Service
         }
         public async Task<List<AgentVM>> GetAllAgentsVMAsync()
         {
-            var allAgents = await GetAllAgents("/all");
+            var allAgents = await GetAllAgents("/incloudMissions");
 
             return allAgents.Select(a => new AgentVM()
             {
@@ -58,5 +58,12 @@ namespace AgentsClient.Service
             return agents.FirstOrDefault(a => a.Id == id)
                 ?? throw new Exception("agent is not found");
         }
+        public async Task<List<(int X, int Y)>> GetAllAgentPositions()
+        {
+            var allAgents = await GetAllAgents();
+            return allAgents.Select(a => (a.XPosition, a.YPosition)).ToList()
+                ?? [];
+        }
+
     }
 }

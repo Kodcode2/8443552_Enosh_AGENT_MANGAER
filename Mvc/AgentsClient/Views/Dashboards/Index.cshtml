@@ -1,13 +1,11 @@
-﻿@model AgentsClient.ViewModel.GeneralInformationVM
+﻿@model AgentsClient.ViewModel.Statistics
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <div>
-    <h4>GeneralInformationVM</h4>
+    <h4>Statistics</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -59,4 +57,8 @@
             @Html.DisplayFor(model => model.RatioOfAgentsThatCanBeTeamedToTargetsAgainstTargets)
         </dd>
     </dl>
+</div>
+<div>
+    @Html.ActionLink("Agents", "Agents") |
+    @Html.ActionLink("Targets", "Targets")
 </div>

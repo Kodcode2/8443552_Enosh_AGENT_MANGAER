@@ -7,14 +7,15 @@ using System.Text.Json;
 
 namespace AgentsClient.Controllers
 {
-    public class DetailsViewController(
+    public class DashboardsController(
         IMissionService missionService,
-        IAgentService agentService
+        IAgentService agentService,
+        ITargetService targetService
     ) : Controller
     {
         public async Task<IActionResult> Index()
         {
-            GeneralInformationVM informationVM = await missionService.GetDetailsView();
+            Statistics informationVM = await missionService.GetStatisticsAsync();
             return View(informationVM);
         }
         public async Task<IActionResult> Agents()
@@ -30,6 +31,12 @@ namespace AgentsClient.Controllers
                 return View(agent.Missions.FirstOrDefault());
             }
             return RedirectToAction("Agents");
+        }
+
+        public async Task<IActionResult> Targets()
+        {
+            var targets = await targetService.GetAllTargetsAsync();
+            return View(targets);
         }
     }
 }

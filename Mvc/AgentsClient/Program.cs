@@ -13,6 +13,7 @@ namespace AgentsClient
             builder.Services.AddScoped<IMissionService, MissionService>();
             builder.Services.AddScoped<IAgentService, AgentService>();
             builder.Services.AddScoped<ITargetService, TargetService>();
+            builder.Services.AddScoped<ITableService, TableService>();
             builder.Services.AddHttpClient();
             var app = builder.Build();
 

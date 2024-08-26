@@ -65,14 +65,14 @@ namespace AgentsClient.Service
             return allMissions.Where(m => m.status == StatusMissionEnum.Assigned).Count();
         }
 
-        public async Task<GeneralInformationVM> GetDetailsView()
+        public async Task<Statistics> GetStatisticsAsync()
         {
             int totalAgents = await agentService.GetCountAgents(),
                 allActiveAgents = await agentService.GetCountActiveAgents(),
-                totalTargets = await targetService.GetCountTargets(),
-                allEliminatedTargets = await targetService.GetCountEliminatedTargets();
+                totalTargets = await targetService.GetCountTargetsAsync(),
+                allEliminatedTargets = await targetService.GetCountEliminatedTargetsAsync();
 
-            var g= new GeneralInformationVM()
+            var g= new Statistics()
             {
                 TotalAgents = totalAgents,
                 AllActiveAgents = allActiveAgents,

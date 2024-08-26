@@ -42,17 +42,22 @@ namespace AgentsRest.Service
         }
         public async Task<List<Agent>> GetAllAgentsWithMissionsAsync()
         {
-            var allAgents = await context.Agents.AsNoTracking()
-            .ToListAsync();
-            
-            foreach (var agent in allAgents)
-            {
-                var missions = await context.Missions
-                    .Where(m => m.AgentId == agent.Id)
-                    .ToListAsync();
-                agent.Missions = missions;
-            }
-            return allAgents;
+            var allAgents = await context.Agents.AsNoTracking().ToListAsync();
+
+            var allMissions = await context.Missions.ToListAsync();
+
+            return (from agent in allAgents
+                     join mission in allMissions on agent.Id equals mission.AgentId
+                     select new Agent () 
+                     {
+                         Id = agent.Id,
+                         Image = agent.Image,
+                         Nickname = agent.Nickname,
+                         Status = agent.Status,
+                         XPosition = agent.XPosition,
+                         YPosition = agent.YPosition,
+                         Missions = [..agent.Missions, mission]
+                     }).ToList();
         }
 
         public async Task PinPositionAsync(int id, PositionDto position)
