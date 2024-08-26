@@ -1,7 +1,9 @@
 ﻿using AgentsClient.Dto;
 using AgentsClient.Enums;
+using AgentsClient.Models;
 using AgentsClient.ViewModel;
 using System.Net.Http.Headers;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 
@@ -10,18 +12,26 @@ namespace AgentsClient.Service
     public class MissionService(
         IHttpClientFactory clientFactory,
         IAgentService agentService,
-        ITargetService targetService
+        ITargetService targetService,
+        Authentication authentication
     ) : IMissionService
     {
         private readonly string baseUrl = "https://localhost:7083/Missions";
         public async Task<List<MissionDto>> GetAllMissionsAsync()
         {
-            var client = clientFactory.CreateClient();
-            var result = await client.GetAsync(baseUrl);
-
-            if (result.IsSuccessStatusCode)
+            if (authentication.Token == null)
             {
-                var content = await result.Content.ReadAsStringAsync();
+                throw new ArgumentNullException("No valid token");
+            }
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, baseUrl);
+            request.Headers.Authorization =
+                new AuthenticationHeaderValue("Bearer",  authentication.Token);
+
+            var Response = await client.SendAsync(request);
+            if (Response.IsSuccessStatusCode)
+            {
+                var content = await Response.Content.ReadAsStringAsync();
                 List<MissionDto>? missions = JsonSerializer.Deserialize<List<MissionDto>>(
                     content,
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }
@@ -43,7 +53,7 @@ namespace AgentsClient.Service
 
             var request = new HttpRequestMessage(HttpMethod.Put, $"{baseUrl}/{id}");
             request.Headers.Authorization =
-                new AuthenticationHeaderValue("Bearer"/*, authentication.Token*/);
+                new AuthenticationHeaderValue("Bearer", authentication.Token);
 
 
             var respons = await client.SendAsync(request);

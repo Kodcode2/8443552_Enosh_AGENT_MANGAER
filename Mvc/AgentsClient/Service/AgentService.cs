@@ -3,20 +3,32 @@ using AgentsClient.Enums;
 using AgentsClient.Models;
 using AgentsClient.ViewModel;
 using System.Text.Json;
+using System.Net.Http.Headers;
 
 namespace AgentsClient.Service
 {
-    public class AgentService(IHttpClientFactory clientFactory) : IAgentService
+    public class AgentService(
+        IHttpClientFactory clientFactory,
+        Authentication authentication
+    ) : IAgentService
     {
         private readonly string baseUrl = "https://localhost:7083/Agents";
         public async Task<List<Agent>> GetAllAgents(string url = "")
         {
-            var client = clientFactory.CreateClient();
-            var result = await client.GetAsync($"{baseUrl}{url}");
-
-            if (result.IsSuccessStatusCode)
+            if (authentication.Token == null)
             {
-                var content = await result.Content.ReadAsStringAsync();
+                throw new ArgumentNullException("No valid token");
+            }
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{baseUrl}{url}");
+            request.Headers.Authorization =
+                new AuthenticationHeaderValue("Bearer", authentication.Token);
+
+            var Response = await client.SendAsync(request);
+
+            if (Response.IsSuccessStatusCode)
+            {
+                var content = await Response.Content.ReadAsStringAsync();
                 List<Agent>? agents = JsonSerializer.Deserialize<List<Agent>>(
                     content,
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }

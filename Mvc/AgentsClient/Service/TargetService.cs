@@ -1,20 +1,28 @@
 ﻿using AgentsClient.Enums;
 using AgentsClient.Models;
+using System.Net.Http.Headers;
+using System.Security.Policy;
 using System.Text.Json;
 
 namespace AgentsClient.Service
 {
-    public class TargetService(IHttpClientFactory clientFactory) : ITargetService
+    public class TargetService(
+        IHttpClientFactory clientFactory,
+        Authentication authentication
+    ) : ITargetService
     {
         private readonly string baseUrl = "https://localhost:7083/Targets";
         public async Task<List<Target>> GetAllTargetsAsync()
         {
             var client = clientFactory.CreateClient();
-            var result = await client.GetAsync($"{baseUrl}");
+            var request = new HttpRequestMessage(HttpMethod.Get, baseUrl);
+            request.Headers.Authorization =
+                new AuthenticationHeaderValue("Bearer", authentication.Token);
 
-            if (result.IsSuccessStatusCode)
+            var Response = await client.SendAsync(request);
+            if (Response.IsSuccessStatusCode)
             {
-                var content = await result.Content.ReadAsStringAsync();
+                var content = await Response.Content.ReadAsStringAsync();
                 List<Target>? targets = JsonSerializer.Deserialize<List<Target>>(
                     content,
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }

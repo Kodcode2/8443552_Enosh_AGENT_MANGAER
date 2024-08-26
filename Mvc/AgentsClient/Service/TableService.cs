@@ -26,7 +26,7 @@ namespace AgentsClient.Service
                     }
                     else
                     {
-                        positions.Matrix[i, j] = "[X]";
+                        positions.Matrix[i, j] = "[..]";
                     }
                 }
             return positions;

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AgentsRest.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AgentsRest.Controllers
 {
@@ -10,6 +11,7 @@ namespace AgentsRest.Controllers
     public class MissionsController(IMissionService missionService) : ControllerBase
     {
         [HttpPost("update")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> MoveAllAssignedAgents()
@@ -23,6 +25,7 @@ namespace AgentsRest.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> GetAllMissions()
@@ -37,6 +40,7 @@ namespace AgentsRest.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> RunMission(int id)
