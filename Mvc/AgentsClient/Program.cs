@@ -15,6 +15,7 @@ namespace AgentsClient
             builder.Services.AddScoped<IAgentService, AgentService>();
             builder.Services.AddScoped<ITargetService, TargetService>();
             builder.Services.AddScoped<ITableService, TableService>();
+            builder.Services.AddScoped<ILoginService, LoginService>();
             builder.Services.AddHttpClient();
             builder.Services.AddSingleton<Authentication>();
             /*builder.Services.AddDistributedMemoryCache();

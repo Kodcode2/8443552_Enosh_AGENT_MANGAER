@@ -6,9 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore;
 using AgentsRest.Utils;
 using AgentsRest.Dto;
-//לטיפול ביום א. בידיקה את הניקוי שלשימות שלא רלוונטיות. ..==========================
-//לבדוק מחיקה שמקרה והמשימה פעילה
-//להוסיף הפעלת משימה
+
 namespace AgentsRest.Service
 {
     public class MissionService(

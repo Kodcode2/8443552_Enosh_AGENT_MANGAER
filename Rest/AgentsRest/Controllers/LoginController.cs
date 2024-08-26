@@ -12,17 +12,14 @@ namespace AgentsRest.Controllers
     public class LoginController(IJwtService jwtService) : ControllerBase
     {
         private static readonly ImmutableList<string> _allowedIds = [
-            "SimulationServer", "ControlManager"
+            "SimulationServer", "MVCServer"
         ];
 
         [HttpPost]
-        public ActionResult<string> Login([FromBody] LoginDto login)
-        {
-            var r = _allowedIds.Contains(login.Id);
-
-            if (r) return Ok(new TokenDto() { Token = jwtService.CreateToken(login.Id) });
-            return BadRequest();
-        }
+        public ActionResult Login([FromBody] LoginDto login) =>
+            _allowedIds.Contains(login.Id)
+                ? Ok(new TokenDto() { Token = jwtService.CreateToken(login.Id) })
+                : BadRequest();
     }
             
 }

@@ -3,10 +3,11 @@ using AgentsClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text;
+using AgentsClient.Service;
 
 namespace AgentsClient.Controllers
 {
-    public class LoginClientController(IHttpClientFactory clientFactory, Authentication authentication) : Controller
+    public class LoginClientController(ILoginService loginService) : Controller
     {
         private readonly string loginApi = "https://localhost:7083/Login";
 
@@ -14,31 +15,15 @@ namespace AgentsClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Login()
         {
-            var client = clientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Post, loginApi);
-
-            request.Content = new StringContent(
-                JsonSerializer.Serialize(new LoginDto() { Id = "ControlManager" }),
-                Encoding.UTF8,
-                "application/json"
-            );
-
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                TokenDto? token = JsonSerializer.Deserialize<TokenDto>(
-                    content,
-                    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }
-                );
-                if( token == null )
-                {
-                    throw new Exception("You didn't get a token");
-                }
-                authentication.Token = token.Token;
-                return RedirectToAction("index", "Home");
+                await loginService.LoginAsync();
+                return RedirectToAction("index", "Table");
             }
-            return View("AuthError");
+            catch (Exception ex)
+            {
+                return View("Error", new ErrorViewModel() { RequestId = ex.Message });
+            }
         }
     }
 }
