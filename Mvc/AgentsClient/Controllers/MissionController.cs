@@ -9,7 +9,7 @@ namespace AgentsClient.Controllers
         public async Task<IActionResult> Index()
         {
             var missions = await missionService.GetAllMissionsAsync();
-            var missionsToView = missions.Where(m => m.status == StatusMissionEnum.Proposal);
+            var missionsToView = missions.Where(m => m.Status == StatusMissionEnum.Proposal);
             return View(missionsToView);
         }
 

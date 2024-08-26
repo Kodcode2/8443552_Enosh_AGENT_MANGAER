@@ -72,7 +72,7 @@ namespace AgentsClient.Service
         public async Task<int> GetCountAssignedMissionsAsync()
         {
             var allMissions = await GetAllMissionsAsync();
-            return allMissions.Where(m => m.status == StatusMissionEnum.Assigned).Count();
+            return allMissions.Where(m => m.Status == StatusMissionEnum.Assigned).Count();
         }
 
         public async Task<Statistics> GetStatisticsAsync()
@@ -82,19 +82,22 @@ namespace AgentsClient.Service
                 totalTargets = await targetService.GetCountTargetsAsync(),
                 allEliminatedTargets = await targetService.GetCountEliminatedTargetsAsync();
 
-            var g= new Statistics()
+            return new Statistics()
             {
                 TotalAgents = totalAgents,
                 AllActiveAgents = allActiveAgents,
                 TotalTargets = totalTargets,
                 AllEliminatedTargets = allEliminatedTargets,
-                TotalMissions = await GetCountMissionsAsync(),
-                AllAssignedMissions = await GetCountAssignedMissionsAsync(),
-                RelationOfAgentsToTargets = (totalTargets) /Math.Max(totalAgents,1),
+                TotalMissions =
+                    await GetCountMissionsAsync(),
+                AllAssignedMissions =
+                    await GetCountAssignedMissionsAsync(),
+                RelationOfAgentsToTargets =
+                    (totalTargets) / Math.Max(totalAgents, 0.00000001),//מניעת חלוקה ב0
                 RatioOfAgentsThatCanBeTeamedToTargetsAgainstTargets =
-                (totalTargets - allEliminatedTargets) / Math.Max(totalAgents - allActiveAgents,1),
+                    (totalTargets - allEliminatedTargets) /
+                    Math.Max(totalAgents - allActiveAgents, 0.00000001),//מניעת חלוקה ב0
             };
-            return g;
         }
     }
 }

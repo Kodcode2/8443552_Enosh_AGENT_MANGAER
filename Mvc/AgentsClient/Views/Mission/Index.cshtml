@@ -71,7 +71,10 @@
                 @Html.DisplayFor(modelItem => item.Distance)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
+                @{
+                    string formattedDuration = item.Duration.ToString(@"hh\:mm\:ss");
+                }
+                @Html.DisplayFor(modelItem => formattedDuration)
             </td>
             <td>
                 @Html.ActionLink("Run", "Run", new { id = item.Id }) |

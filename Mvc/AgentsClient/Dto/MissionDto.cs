@@ -14,6 +14,6 @@ namespace AgentsClient.Dto
         public int TargetYPosition { get; set; }
         public double Distance { get; set; }
         public TimeSpan Duration { get; set; }
-        public StatusMissionEnum status { get; set; }
+        public StatusMissionEnum Status { get; set; }
     }
 }
