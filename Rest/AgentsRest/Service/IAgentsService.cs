@@ -7,8 +7,9 @@ namespace AgentsRest.Service
     {
         Task<IdDto> CreateAgentAsync(AgentDto agent);
         Task<List<Agent>> GetAllAgentsAsync();
+        Task<Agent> GetAgentByIdAsync(int id);
         Task<List<Agent>> GetAllAgentsWithMissionsAsync();
-        Task PinPositionAsync(int id, PositionDto position);
+        Task PinAgentAsync(int id, PositionDto position);
         Task MoveAgentAsync(int id, DirectionDto direction);
     }
 }

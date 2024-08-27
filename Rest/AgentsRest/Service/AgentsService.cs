@@ -3,11 +3,7 @@ using AgentsRest.Dto;
 using AgentsRest.Enums;
 using AgentsRest.Models;
 using AgentsRest.Utils;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System;
 
 namespace AgentsRest.Service
 {
@@ -16,7 +12,8 @@ namespace AgentsRest.Service
         IServiceProvider serviceProvider
     ) : IAgentsService
     {
-        private IMissionService _missionService = serviceProvider.GetRequiredService<IMissionService>();
+        private IMissionService _missionService => serviceProvider.GetRequiredService<IMissionService>();
+        //יצירת סוכן
         public async Task<IdDto> CreateAgentAsync(AgentDto agent)
         {
             Agent model = new()
@@ -30,16 +27,27 @@ namespace AgentsRest.Service
             await context.SaveChangesAsync();
             if (model.Id == 0)
             {
-                throw new Exception("bad request");
+                throw new Exception("No agent created");
             }
             return new() { Id = model.Id };
         }
 
-        public async Task<List<Agent>> GetAllAgentsAsync()
+        //קבלת כל הסוכנים
+        public async Task<List<Agent>> GetAllAgentsAsync() =>
+            await context.Agents.ToListAsync();
+
+        //קבלת סוכן ספציפי לפי ID
+        public async Task<Agent> GetAgentByIdAsync(int id)
         {
-            var allAgents = await context.Agents.ToListAsync();
-            return allAgents;
+            var agent = await context.Agents.FirstOrDefaultAsync(a => a.Id == id);
+            if (agent == null)
+            {
+                throw new Exception("agent is not found");
+            }
+            return agent;
         }
+
+        //קבלת כל הסוכנים והמשימות המקושרות להם
         public async Task<List<Agent>> GetAllAgentsWithMissionsAsync()
         {
             var allAgents = await context.Agents.AsNoTracking().ToListAsync();
@@ -60,29 +68,24 @@ namespace AgentsRest.Service
                      }).ToList();
         }
 
-        public async Task PinPositionAsync(int id, PositionDto position)
+        //הצבת סוכן במיקום ראשוני
+        public async Task PinAgentAsync(int id, PositionDto position)
         {
             if (!MoveUtils.IsPositionLegal(position.X, position.Y))
             {
                 throw new Exception("the Position is not legal");
             }
-            var agent = await context.Agents.FirstOrDefaultAsync(a => a.Id == id);
-            if (agent == null)
-            {
-                throw new Exception("agent is not found");
-            }
+            var agent = await GetAgentByIdAsync(id);
             agent.XPosition = position.X;
             agent.YPosition = position.Y;
             await context.SaveChangesAsync();
         }
 
+        //הזזת סוכן
         public async Task MoveAgentAsync(int id, DirectionDto direction)
         {
-            var agent = await context.Agents.FirstOrDefaultAsync(a => a.Id == id);
-            if (agent == null)
-            {
-                throw new Exception("agent is not found");
-            }
+            var agent = await GetAgentByIdAsync(id);
+
             if (agent.Status == StatusAgentEnum.Active)
             {
                 throw new Exception("agent is active");
@@ -95,7 +98,9 @@ namespace AgentsRest.Service
                 throw new Exception("the move is not legal");
             }
             await context.SaveChangesAsync();
+            //מחיקת כל המשימות שכבר בוטלו
             await _missionService.DeleteIrrelevantMissions();
+            //יצירת המשימות החדשות
             await _missionService.CreateMission(agent);
         }
     }

@@ -9,8 +9,11 @@ namespace AgentsRest.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class LoginController(IJwtService jwtService) : ControllerBase
+    public class LoginController(
+        IJwtService jwtService
+    ) : ControllerBase
     {
+        //השמות המאושרים לכניסה
         private static readonly ImmutableList<string> _allowedIds = [
             "SimulationServer", "MVCServer"
         ];
